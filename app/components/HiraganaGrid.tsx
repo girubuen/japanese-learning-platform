@@ -1,5 +1,9 @@
 // app/components/HiraganaGrid.tsx
 
+"use client";
+
+import { useState } from "react";
+
 type KanaEntry = {
   kana: string;
   romaji: string;
@@ -98,18 +102,18 @@ const HIRAGANA_ROWS: KanaEntry[][] = [
   ],
 
   // n
-  [
-    { kana: "ん", romaji: "n", group: "n" },
-  ],
+  [{ kana: "ん", romaji: "n", group: "n" }],
 ];
 
 const KANA_LIST: KanaEntry[] = HIRAGANA_ROWS.flat();
 
 type KanaCardProps = {
   entry: KanaEntry;
+  showRomaji: boolean;
+  onClick: (romaji: string) => void;
 };
 
-function KanaCard({ entry }: KanaCardProps) {
+function KanaCard({ entry, showRomaji, onClick }: KanaCardProps) {
   if (!entry.kana) {
     return <div className="aspect-square" />; // empty slot spacing
   }
@@ -119,6 +123,7 @@ function KanaCard({ entry }: KanaCardProps) {
       role="button"
       tabIndex={0}
       aria-label={`${entry.kana} — ${entry.romaji}`}
+      onClick={() => onClick(entry.romaji)}
       className="
         group
         aspect-square
@@ -153,20 +158,22 @@ function KanaCard({ entry }: KanaCardProps) {
       >
         {entry.kana}
       </span>
-      <span
-        className="
-          mt-1.5
-          text-[10px] sm:text-xs
-          tracking-widest
-          uppercase
-          text-[#0D3A5F]/50
-          group-hover:text-white/70
-          transition-colors duration-200
-        "
-        style={{ fontFamily: "Georgia, serif" }}
-      >
-        {entry.romaji}
-      </span>
+      {showRomaji && (
+        <span
+          className="
+            mt-1.5
+            text-[10px] sm:text-xs
+            tracking-widest
+            uppercase
+            text-[#0D3A5F]/50
+            group-hover:text-white/70
+            transition-colors duration-200
+          "
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {entry.romaji}
+        </span>
+      )}
     </div>
   );
 }
@@ -186,8 +193,27 @@ function RowLabel({ label }: { label: string }) {
 }
 
 export default function HiraganaGrid() {
+  const [showRomaji, setShowRomaji] = useState(false);
+
+  const speakRomaji = (romaji: string) => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(romaji);
+      utterance.lang = "en-US"; // or 'ja-JP' for Japanese, but romaji is English
+      speechSynthesis.speak(utterance);
+    }
+  };
+
   return (
     <section className="w-full max-w-2xl mx-auto">
+      <div className="mb-4 flex justify-center">
+        <button
+          onClick={() => setShowRomaji(!showRomaji)}
+          className="px-4 py-2 rounded-sm border-2 border-[#0D3A5F] text-sm tracking-wide text-[#0D3A5F] font-semibold transition-all duration-200 ease-out hover:bg-[#0D3A5F] hover:text-[#F4E7D3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4E7D3]"
+          style={{ fontFamily: "Georgia, serif" }}
+        >
+          {showRomaji ? "Hide Romaji" : "Show Romaji"}
+        </button>
+      </div>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4">
         {HIRAGANA_ROWS.map((row) => {
           const { group } = row[0];
@@ -195,7 +221,12 @@ export default function HiraganaGrid() {
             <div key={group} className="contents">
               <RowLabel label={group} />
               {row.map((entry, i) => (
-                <KanaCard key={`${entry.romaji}-${i}`} entry={entry} />
+                <KanaCard
+                  key={`${entry.romaji}-${i}`}
+                  entry={entry}
+                  showRomaji={showRomaji}
+                  onClick={speakRomaji}
+                />
               ))}
             </div>
           );
@@ -206,7 +237,7 @@ export default function HiraganaGrid() {
         className="mt-6 text-center text-xs tracking-widest uppercase text-[#0D3A5F]/35"
         style={{ fontFamily: "Georgia, serif" }}
       >
-        {KANA_LIST.filter(k => k.kana).length} characters · Hiragana
+        {KANA_LIST.filter((k) => k.kana).length} characters · Hiragana
       </p>
     </section>
   );
