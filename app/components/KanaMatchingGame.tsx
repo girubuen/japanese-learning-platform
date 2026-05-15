@@ -59,7 +59,7 @@ const KANA: KanaItem[] = [
 ====================================================== */
 
 type Mode = "all" | "hiragana" | "katakana";
-type GameMode = "multiple" | "typing";
+type GameMode = "Multiple Choices" | "Typing";
 
 type Stats = {
   correct: number;
@@ -98,7 +98,7 @@ const getWeightedKana = (pool: KanaItem[], stats: Record<string, Stats>) => {
 
 export default function KanaMatchingGame() {
   const [mode, setMode] = useState<Mode>("all");
-  const [gameMode, setGameMode] = useState<GameMode>("multiple");
+  const [gameMode, setGameMode] = useState<GameMode>("Multiple Choices");
 
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -264,7 +264,7 @@ export default function KanaMatchingGame() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       // Multiple choice
-      if (gameMode === "multiple" && ["1", "2", "3", "4"].includes(e.key)) {
+      if (gameMode === "Multiple Choices" && ["1", "2", "3", "4"].includes(e.key)) {
         const index = Number(e.key) - 1;
 
         if (options[index]) {
@@ -273,7 +273,7 @@ export default function KanaMatchingGame() {
       }
 
       // Typing submit
-      if (gameMode === "typing" && e.key === "Enter") {
+      if (gameMode === "Typing" && e.key === "Enter") {
         handleTypingSubmit();
       }
 
@@ -373,7 +373,7 @@ export default function KanaMatchingGame() {
 
       {/* Game Mode */}
       <div className="flex justify-center gap-2 mb-8">
-        {(["multiple", "typing"] as GameMode[]).map((m) => (
+        {(["Multiple Choices", "Typing"] as GameMode[]).map((m) => (
           <button
             key={m}
             onClick={() => setGameMode(m)}
@@ -399,7 +399,7 @@ export default function KanaMatchingGame() {
       </div>
 
       {/* Multiple Choice */}
-      {gameMode === "multiple" && (
+      {gameMode === "Multiple Choices" && (
         <div className="grid grid-cols-2 gap-3 mb-6">
           {options.map((option, index) => (
             <button
@@ -414,7 +414,7 @@ export default function KanaMatchingGame() {
       )}
 
       {/* Typing Mode */}
-      {gameMode === "typing" && (
+      {gameMode === "Typing" && (
         <div className="flex flex-col gap-3 mb-6">
           <input
             value={typingAnswer}
