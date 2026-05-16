@@ -2,7 +2,7 @@
 
 "use client";
 
-import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useMemo, useRef, useState } from "react";
+import {useEffect, useMemo, useRef, useState } from "react";
 import { KANA, type KanaItem, type Mode, type GameMode, type Stats } from "./kana-data";
 import { shuffle, getWeightedKana, speakKana } from "./kana-utils";
 import KanaHeader from "./KanaHeader";

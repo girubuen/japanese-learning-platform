@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import type { Mode, GameMode } from "./kana-data";
 
 type Props = {

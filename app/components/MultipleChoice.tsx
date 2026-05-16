@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 type Props = {
   options: string[];
   onSelect: (option: string) => void;

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import type { Stats } from "./kana-data";
 
 type Props = {
