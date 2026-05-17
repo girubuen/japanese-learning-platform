@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HiraganaGrid from "../../components/HiraganaGrid";
+import HiraganaGrid from "../../components/practice/HiraganaGrid";
 
 export default function HiraganaPage() {
   return (

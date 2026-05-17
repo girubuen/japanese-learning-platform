@@ -1,5 +1,3 @@
-// app/components/KanaMatchingGame.tsx
-
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -9,10 +7,10 @@ import {
   type Mode,
   type GameMode,
   type Stats,
-} from "./kana-data";
-import { shuffle, getWeightedKana, speakKana } from "./kana-utils";
-import KanaHeader from "./KanaHeader";
-import ModeToggle from "./ModeToggle";
+} from "../data/kana-data";
+import { shuffle, getWeightedKana, speakKana } from "../data/kana-utils";
+import GameHeader from "./GameHeader";
+import GameModeToggle from "./GameModeToggle";
 import MultipleChoice from "./MultipleChoice";
 import TypingMode from "./TypingMode";
 import HardestKana from "./HardestKana";
@@ -192,8 +190,8 @@ export default function KanaMatchingGame() {
         <div className="p-8 md:p-10">
           <div className="flex flex-col gap-10">
             <div className="grid gap-6">
-              <KanaHeader score={score} streak={streak} lives={lives} />
-              <ModeToggle
+              <GameHeader score={score} streak={streak} lives={lives} />
+              <GameModeToggle
                 mode={mode}
                 setMode={setMode}
                 gameMode={gameMode}

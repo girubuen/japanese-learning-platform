@@ -1,11 +1,12 @@
 "use client";
+
 type Props = {
   score: number;
   streak: number;
   lives: number;
 };
 
-export default function KanaHeader({ score, streak, lives }: Props) {
+export default function GameHeader({ score, streak, lives }: Props) {
   return (
     <div className="grid gap-6 rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-6 text-[#0D3A5F] shadow-sm">
       <div>

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import KanaMatchingGame from "../components/KanaMatchingGame";
+import KanaMatchingGame from "../components/game/KanaMatchingGame";
 
 export default function GamePage() {
   return (
     <main
       className="min-h-screen flex flex-col items-center relative overflow-hidden px-6"
-      style={{ backgroundColor: "#F4E7D3" }}
+      style={{ backgroundColor: "#ffffff" }}
     >
       <div
         aria-hidden
@@ -13,7 +13,7 @@ export default function GamePage() {
       >
         <span
           className="absolute -bottom-16 -left-10 text-[20rem] font-black leading-none opacity-[0.035]"
-          style={{ color: "#0D3A5F", fontFamily: "serif" }}
+          style={{ color: "#00087e", fontFamily: "serif" }}
         >
           遊
         </span>

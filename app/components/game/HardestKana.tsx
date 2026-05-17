@@ -1,6 +1,6 @@
 "use client";
 
-import type { Stats } from "./kana-data";
+import type { Stats } from "../data/kana-data";
 
 type Props = {
   hardest: [string, Stats][];

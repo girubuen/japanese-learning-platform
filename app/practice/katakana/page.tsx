@@ -1,5 +1,5 @@
 import Link from "next/link";
-import KatakanaGrid from "../../components/KatakanaGrid";
+import KatakanaGrid from "../../components/practice/KatakanaGrid";
 
 export default function KatakanaPage() {
   return (

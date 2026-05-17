@@ -1,5 +1,5 @@
 "use client";
-import type { Mode, GameMode } from "./kana-data";
+import type { Mode, GameMode } from "../data/kana-data";
 
 type Props = {
   mode: Mode;
@@ -8,7 +8,7 @@ type Props = {
   setGameMode: (g: GameMode) => void;
 };
 
-export default function ModeToggle({
+export default function GameModeToggle({
   mode,
   setMode,
   gameMode,
