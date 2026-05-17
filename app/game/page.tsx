@@ -1,5 +1,6 @@
 import Link from "next/link";
 import KanaMatchingGame from "../components/game/KanaMatchingGame";
+import KeyboardInfoTooltip from "../components/data/KeyboardInfoTooltip";
 
 export default function GamePage() {
   return (
@@ -13,7 +14,7 @@ export default function GamePage() {
       >
         <span
           className="absolute -bottom-16 -left-10 text-[20rem] font-black leading-none opacity-[0.035]"
-          style={{ color: "#00087e", fontFamily: "serif" }}
+          style={{ color: "#000000", fontFamily: "serif" }}
         >
           遊
         </span>
@@ -31,17 +32,17 @@ export default function GamePage() {
 
       <div className="relative z-10 w-full max-w-3xl px-6 py-14 flex flex-col items-center gap-10">
         {/* Back Button */}
-        <div className="w-full flex items-center justify-start">
+        <div className="w-full flex items-center justify-between">
+          {/* Back Button */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm border-2 border-[#0D3A5F] text-sm tracking-wide text-[#0D3A5F] font-semibold transition-all duration-200 ease-out hover:bg-[#0D3A5F] hover:text-[#F4E7D3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4E7D3]"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm border-2 border-[#0D3A5F] text-sm tracking-wide text-[#0D3A5F] font-semibold transition-all duration-200 ease-out hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
             style={{ fontFamily: "Georgia, serif" }}
           >
-            <span aria-hidden className="text-base leading-none">
-              ←
-            </span>{" "}
-            Back
+            ← Back
           </Link>
+
+          <KeyboardInfoTooltip />
         </div>
 
         {/* Header */}

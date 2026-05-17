@@ -250,6 +250,7 @@ export default function KanaMatchingGame() {
                 <li>A → All</li>
               </ul>
             </div>
+
           </div>
         </div>
       </div>
