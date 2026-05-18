@@ -24,10 +24,8 @@ export default function KanaMatchingGame() {
   const [lives, setLives] = useState(5);
 
   const [currentKana, setCurrentKana] = useState<KanaItem>(KANA[0]);
-
   const [options, setOptions] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("");
-
   const [typingAnswer, setTypingAnswer] = useState("");
 
   const [stats, setStats] = useState<Record<string, Stats>>({});
@@ -36,10 +34,7 @@ export default function KanaMatchingGame() {
 
   useEffect(() => {
     const saved = localStorage.getItem("kana-stats");
-
-    if (saved) {
-      setStats(JSON.parse(saved));
-    }
+    if (saved) setStats(JSON.parse(saved));
   }, []);
 
   useEffect(() => {
@@ -64,7 +59,6 @@ export default function KanaMatchingGame() {
     ).slice(0, 3);
 
     setOptions(shuffle([randomKana.romaji, ...wrongs]));
-
     setFeedback("");
     setTypingAnswer("");
   };
@@ -88,7 +82,7 @@ export default function KanaMatchingGame() {
 
     timeoutRef.current = setTimeout(() => {
       generateQuestion();
-    }, 1000);
+    }, 1200);
   };
 
   const handleCorrect = () => {
@@ -96,11 +90,9 @@ export default function KanaMatchingGame() {
     setStreak((s) => s + 1);
 
     updateStats(true);
-
     setFeedback("Correct! 🎉");
 
     speakKana(currentKana.kana);
-
     nextQuestion();
   };
 
@@ -109,7 +101,6 @@ export default function KanaMatchingGame() {
     setStreak(0);
 
     updateStats(false);
-
     setFeedback(`Wrong! ${currentKana.kana} = ${currentKana.romaji}`);
 
     nextQuestion();
@@ -121,9 +112,11 @@ export default function KanaMatchingGame() {
   };
 
   const handleTypingSubmit = () => {
-    if (typingAnswer.trim().toLowerCase() === currentKana.romaji)
+    if (typingAnswer.trim().toLowerCase() === currentKana.romaji) {
       handleCorrect();
-    else handleWrong();
+    } else {
+      handleWrong();
+    }
   };
 
   useEffect(() => {
@@ -139,22 +132,16 @@ export default function KanaMatchingGame() {
       if (gameMode === "Typing" && e.key === "Enter") {
         handleTypingSubmit();
       }
-
-      if (e.key.toLowerCase() === "h") setMode("hiragana");
-      if (e.key.toLowerCase() === "k") setMode("katakana");
-      if (e.key.toLowerCase() === "a") setMode("all");
     };
 
     window.addEventListener("keydown", handler);
-
     return () => window.removeEventListener("keydown", handler);
   }, [options, gameMode, typingAnswer]);
 
   const resetGame = () => {
     setScore(0);
     setStreak(0);
-    setLives(3);
-
+    setLives(5);
     generateQuestion();
   };
 
@@ -164,18 +151,23 @@ export default function KanaMatchingGame() {
 
   if (lives <= 0) {
     return (
-      <div className="w-full max-w-3xl mx-auto px-6 py-10">
-        <div className="rounded-[2rem] border border-[#E7E3DE] bg-white/90 p-10 text-center shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)]">
-          <p className="text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-4">
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <div className="rounded-[1.75rem] sm:rounded-[2rem] border border-[#E7E3DE] bg-white/90 p-6 sm:p-10 text-center shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)]">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-4">
             Game Over
           </p>
-          <h2 className="text-5xl font-black text-[#0D3A5F] mb-4">
+
+          <h2 className="text-3xl sm:text-5xl font-black text-[#0D3A5F] mb-4">
             Final Score
           </h2>
-          <p className="text-6xl font-semibold text-[#0D3A5F] mb-6">{score}</p>
+
+          <p className="text-4xl sm:text-6xl font-semibold text-[#0D3A5F] mb-6">
+            {score}
+          </p>
+
           <button
             onClick={resetGame}
-            className="inline-flex items-center justify-center rounded-full bg-[#0D3A5F] px-8 py-4 text-base font-semibold text-[#F4E7D3] transition hover:bg-[#492A76]"
+            className="inline-flex items-center justify-center rounded-full bg-[#0D3A5F] px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-[#F4E7D3] transition hover:bg-[#492A76]"
           >
             Restart
           </button>
@@ -185,21 +177,19 @@ export default function KanaMatchingGame() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-6 py-10">
-      <div className="rounded-[2rem] border border-[#E7E3DE] bg-white/95 shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)] overflow-hidden">
-        <div className="p-8 md:p-10">
-          <div className="flex flex-col gap-10">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <div className="rounded-[1.75rem] sm:rounded-[2rem] border border-[#E7E3DE] bg-white/95 shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)] overflow-hidden">
+        <div className="p-5 sm:p-8 md:p-10">
+          <div className="flex flex-col gap-6 sm:gap-10">
+            {/* HEADER */}
             <div className="grid gap-6">
               <GameHeader score={score} streak={streak} lives={lives} />
 
-              <div className="mt-1 rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-5 text-left text-xs uppercase tracking-[0.35em] text-[#0D3A5F]/70">
-                <p className="mb-6 font-semibold mb-2 text-center">
-                  Keyboard shortcuts
-                </p>{" "}
-                <ul className="space-y-1">
-                  <li>H → Hiragana</li>
-                  <li>K → Katakana</li>
-                  <li>A → All</li>
+              {/* SHORTCUTS */}
+              <div className="hidden sm:block rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-4 sm:p-5 text-center text-xs uppercase tracking-[0.35em] text-[#0D3A5F]/70">
+                <p className="mb-3 sm:mb-5 font-semibold">Keyboard shortcuts</p>
+
+                <ul className="space-y-1 text-left">
                   <li>1-4 → Select answer</li>
                   <li>Enter → Submit typing</li>
                 </ul>
@@ -213,31 +203,38 @@ export default function KanaMatchingGame() {
               />
             </div>
 
-            {feedback ? (
-              <div className=" rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-5 py-4 text-sm font-semibold text-[#0D3A5F]">
-                {feedback}
-              </div>
-            ) : null}
-
-            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-10 text-center shadow-sm">
-              <p className="text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-5">
+            {/* QUESTION CARD */}
+            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-6 sm:p-10 text-center shadow-sm">
+              <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-4 sm:mb-5">
                 Match the character
               </p>
+
+              {feedback && (
+                <div className="mb-4 sm:mb-6 rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-4 sm:px-5 py-3 sm:py-4 text-sm font-semibold text-[#0D3A5F]">
+                  {feedback}
+                </div>
+              )}
+
               <div
-                className="text-[5rem] md:text-[6rem] font-black text-[#0D3A5F] mb-8"
-                style={{ fontFamily: "Hiragino Mincho ProN, serif" }}
+                className="text-[3.5rem] sm:text-[5rem] md:text-[6rem] font-black text-[#0D3A5F] mb-6 sm:mb-8"
+                style={{
+                  fontFamily: "Hiragino Mincho ProN, serif",
+                }}
               >
                 {currentKana.kana}
               </div>
+
               <button
                 onClick={() => speakKana(currentKana.kana)}
-                className="cursor-pointer inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-6 py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
+                className="inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
               >
-                🔊 Hear pronunciation
+                <span>🔊</span>
+                <span className="hidden sm:inline">Hear pronunciation</span>
               </button>
             </div>
 
-            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-white p-8 shadow-sm">
+            {/* ANSWERS */}
+            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-white p-5 sm:p-8 shadow-sm">
               {gameMode === "Multiple Choices" ? (
                 <MultipleChoice
                   options={options}
@@ -252,6 +249,7 @@ export default function KanaMatchingGame() {
               )}
             </div>
 
+            {/* STATS */}
             <HardestKana hardest={hardestKana} />
           </div>
         </div>

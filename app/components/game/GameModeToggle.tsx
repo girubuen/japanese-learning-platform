@@ -15,41 +15,44 @@ export default function GameModeToggle({
   setGameMode,
 }: Props) {
   return (
-    <div className="grid gap-4 text-[#0D3A5F]">
+    <div className="grid gap-6 text-[#0D3A5F]">
+      {/* Script selector */}
       <div>
-        <p className="text-xs uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-3">
+        <p className="mb-3 text-center text-xs uppercase tracking-[0.4em] text-[#0D3A5F]/70 sm:text-left">
           Choose script
         </p>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {(
             [
-              { value: "all", label: "全 Both" },
-              { value: "hiragana", label: "あ Hiragana" },
-              { value: "katakana", label: "ア Katakana" },
+              { value: "all", jp: "全", label: "Both" },
+              { value: "hiragana", jp: "あ", label: "Hiragana" },
+              { value: "katakana", jp: "ア", label: "Katakana" },
             ] as const
           ).map((m) => (
             <button
               key={m.value}
               onClick={() => setMode(m.value)}
-              className={`cursor-pointer rounded-[1.25rem] border px-4 py-3 text-sm font-semibold transition ${
+              className={`cursor-pointer rounded-[1.25rem] border px-4 py-3 text-sm font-semibold transition flex items-center justify-center gap-2 ${
                 mode === m.value
                   ? "bg-[#0D3A5F] text-[#F4E7D3] border-transparent"
                   : "border-[#D9E2EC] bg-white text-[#0D3A5F] hover:border-[#0D3A5F]/70"
               }`}
             >
-              {m.label}
+              <span className="text-base sm:text-sm">{m.jp}</span>
+              <span>{m.label}</span>
             </button>
           ))}
         </div>
       </div>
 
+      {/* Game mode selector */}
       <div>
-        <p className="text-xsuppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-3">
+        <p className="mb-3 text-center text-xs uppercase tracking-[0.4em] text-[#0D3A5F]/70 sm:text-left">
           Game mode
         </p>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {(["Multiple Choices", "Typing"] as GameMode[]).map((m) => (
             <button
               key={m}
