@@ -5,7 +5,7 @@ export default function KatakanaPage() {
   return (
     <main
       className="min-h-screen flex flex-col items-center relative overflow-hidden"
-      style={{ backgroundColor: "#F4E7D3" }}
+      // style={{ backgroundColor: "#F4E7D3" }}
     >
       <div
         aria-hidden

@@ -9,10 +9,14 @@ export default function HomePage() {
   return (
     <main
       className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-6"
-      style={{ backgroundColor: "#F4E7D3" }}
+      // style={{ backgroundColor: "#F4E7D3" }}
+      // I replaced the BG w/ tori.mp4
     >
       {/* ── Decorative background glyphs (purely visual, aria-hidden) ── */}
-      <div aria-hidden className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+      >
         {/* Large faded Kanji watermarks for ambience */}
         <span
           className="absolute -top-8 -left-6 text-[18rem] font-black leading-none opacity-[0.045]"
@@ -41,11 +45,10 @@ export default function HomePage() {
 
       {/* ── Hero content card ── */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-xl w-full gap-8">
-
         {/* Kana badge above title */}
         <div
           className="flex gap-3 text-2xl tracking-widest font-light"
-          style={{ color: "#0881A3", fontFamily: "serif" }}
+          style={{ color: "#000000", fontFamily: "serif" }}
           aria-label="Hiragana and Katakana characters"
         >
           <span>あ</span>
@@ -82,72 +85,92 @@ export default function HomePage() {
         {/* ── Subtitle ── */}
         <p
           className="text-lg sm:text-xl font-light leading-relaxed max-w-sm"
-          style={{ color: "#0D3A5F", opacity: 0.75, fontFamily: "Georgia, serif" }}
+          style={{
+            color: "#0D3A5F",
+            opacity: 0.75,
+            fontFamily: "Georgia, serif",
+          }}
         >
           Master Hiragana and Katakana&nbsp;
           <span className="italic">the right way</span>
         </p>
 
         {/* ── CTA Buttons ── */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm mt-2">
-
+        <div className="mt-4 flex w-full flex-col gap-3 sm:max-w-sm sm:flex-row sm:gap-4">
           {/* Primary — Start Learning */}
           <Link
             href="/practice/hiragana"
-            className="flex-1 text-center py-4 px-8 rounded-sm font-semibold text-base tracking-wide transition-all duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={
-              {
-                backgroundColor: "#0881A3",
-                color: "#F4E7D3",
-                fontFamily: "Georgia, serif",
-                letterSpacing: "0.04em",
-                "--tw-ring-color": "#0881A3",
-              } as React.CSSProperties
-            }
-            // Hover handled via Tailwind group + CSS custom props below
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = "#0D3A5F";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = "#0881A3";
+            className="
+      group relative flex-1 overflow-hidden rounded-2xl
+      px-6 py-4
+      text-center text-sm sm:text-base font-semibold
+      tracking-[0.04em]
+      text-[#F4E7D3]
+      shadow-[0_10px_30px_rgba(8,129,163,0.25)]
+      transition-all duration-300 ease-out
+
+      hover:-translate-y-0.5
+      hover:shadow-[0_16px_40px_rgba(13,58,95,0.35)]
+
+      active:scale-[0.98]
+
+      focus:outline-none
+      focus-visible:ring-2
+      focus-visible:ring-[#0881A3]
+      focus-visible:ring-offset-2
+    "
+            style={{
+              background: "linear-gradient(135deg, #0881A3 0%, #0D3A5F 100%)",
+              fontFamily: "Georgia, serif",
             }}
           >
-            Start Learning
+            <span className="relative z-10">Start Learning</span>
+
+            {/* glow */}
+            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-white/10" />
           </Link>
 
           {/* Secondary — Play Game */}
           <Link
             href="/game"
-            className="flex-1 text-center py-4 px-8 rounded-sm font-semibold text-base tracking-wide border-2 transition-all duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={
-              {
-                borderColor: "#0D3A5F",
-                color: "#0D3A5F",
-                backgroundColor: "transparent",
-                fontFamily: "Georgia, serif",
-                letterSpacing: "0.04em",
-                "--tw-ring-color": "#0D3A5F",
-              } as React.CSSProperties
-            }
-            onMouseEnter={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.backgroundColor = "#0D3A5F";
-              el.style.color = "#F4E7D3";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.backgroundColor = "transparent";
-              el.style.color = "#0D3A5F";
+            className="
+      group relative flex-1 overflow-hidden rounded-2xl
+      border border-[#0D3A5F]/20
+      bg-white/70 backdrop-blur-md
+
+      px-6 py-4
+      text-center text-sm sm:text-base font-semibold
+      tracking-[0.04em]
+      text-[#0D3A5F]
+
+      shadow-[0_8px_24px_rgba(15,23,42,0.06)]
+      transition-all duration-300 ease-out
+
+      hover:-translate-y-0.5
+      hover:border-[#0D3A5F]
+      hover:bg-[#0D3A5F]
+      hover:text-[#F4E7D3]
+      hover:shadow-[0_14px_34px_rgba(13,58,95,0.18)]
+
+      active:scale-[0.98]
+
+      focus:outline-none
+      focus-visible:ring-2
+      focus-visible:ring-[#0D3A5F]
+      focus-visible:ring-offset-2
+    "
+            style={{
+              fontFamily: "Georgia, serif",
             }}
           >
-            Play Game
+            <span className="relative z-10">Play Game</span>
           </Link>
         </div>
 
         {/* ── Subtle footer hint ── */}
         <p
           className="text-xs tracking-widest uppercase mt-4 opacity-40"
-          style={{ color: "#0D3A5F", fontFamily: "Georgia, serif" }}
+          style={{ color: "#000000", fontFamily: "Georgia, serif" }}
         >
           Hiragana · Katakana · Kanji (Soon)
         </p>

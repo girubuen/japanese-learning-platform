@@ -178,7 +178,8 @@ export default function KanaMatchingGame() {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-      <div className="rounded-[1.75rem] sm:rounded-[2rem] border border-[#E7E3DE] bg-white/95 shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)] overflow-hidden">
+      <div className="rounded-[1.75rem] sm:rounded-[2rem] border border-[#E7E3DE] bg-white/60 backdrop-blur-md shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)] overflow-hidden">
+        {" "}
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 sm:gap-10">
             {/* HEADER */}

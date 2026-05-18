@@ -1,12 +1,11 @@
 import Link from "next/link";
 import KanaMatchingGame from "../components/game/KanaMatchingGame";
-import KeyboardInfoTooltip from "../components/data/KeyboardInfoTooltip";
 
 export default function GamePage() {
   return (
     <main
       className="min-h-screen flex flex-col items-center relative overflow-hidden px-6"
-      style={{ backgroundColor: "#ffffff" }}
+      // style={{ backgroundColor: "#ffffff" }}
     >
       <div
         aria-hidden
@@ -41,8 +40,6 @@ export default function GamePage() {
           >
             ← Back
           </Link>
-
-          <KeyboardInfoTooltip />
         </div>
 
         {/* Header */}

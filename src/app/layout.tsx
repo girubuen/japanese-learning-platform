@@ -27,7 +27,20 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="bg-video"
+          aria-hidden="true"
+        >
+          <source src="/tori.mp4" type="video/mp4" />
+        </video>
+        <div className="bg-overlay" aria-hidden="true" />
+        <main className="app-content">{children}</main>
+      </body>
     </html>
   );
 }
