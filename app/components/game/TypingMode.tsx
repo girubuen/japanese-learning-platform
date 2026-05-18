@@ -22,7 +22,7 @@ export default function TypingMode({
 
       <button
         onClick={onSubmit}
-        className="w-full rounded-full bg-[#0D3A5F] px-6 py-4 text-base font-semibold text-[#F4E7D3] transition hover:bg-[#492A76]"
+        className="cursor-pointer w-full rounded-full bg-[#0D3A5F] px-6 py-4 text-base font-semibold text-[#F4E7D3] transition hover:bg-[#492A76]"
       >
         Submit
       </button>

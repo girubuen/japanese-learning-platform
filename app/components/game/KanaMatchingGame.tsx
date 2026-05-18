@@ -213,6 +213,12 @@ export default function KanaMatchingGame() {
               />
             </div>
 
+            {feedback ? (
+              <div className=" rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-5 py-4 text-sm font-semibold text-[#0D3A5F]">
+                {feedback}
+              </div>
+            ) : null}
+
             <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-10 text-center shadow-sm">
               <p className="text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-5">
                 Match the character
@@ -225,7 +231,7 @@ export default function KanaMatchingGame() {
               </div>
               <button
                 onClick={() => speakKana(currentKana.kana)}
-                className="inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-6 py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
+                className="cursor-pointer inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-6 py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
               >
                 🔊 Hear pronunciation
               </button>
@@ -245,12 +251,6 @@ export default function KanaMatchingGame() {
                 />
               )}
             </div>
-
-            {feedback ? (
-              <div className="rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-5 py-4 text-sm font-semibold text-[#0D3A5F]">
-                {feedback}
-              </div>
-            ) : null}
 
             <HardestKana hardest={hardestKana} />
           </div>

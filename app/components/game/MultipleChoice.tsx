@@ -13,7 +13,7 @@ export default function MultipleChoice({ options, onSelect }: Props) {
           key={option + index}
           onClick={() => onSelect(option)}
           className="
-            group relative overflow-hidden rounded-3xl
+            group relative cursor-pointer overflow-hidden rounded-3xl
             border border-slate-200/70
             bg-white/80
             p-6
@@ -39,7 +39,7 @@ export default function MultipleChoice({ options, onSelect }: Props) {
           <div className="relative z-10">
             <div className="flex items-center justify-between">
               <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Choice {index + 1}
+                Choice
               </span>
 
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-500 transition-colors duration-300 group-hover:bg-slate-900 group-hover:text-white">
