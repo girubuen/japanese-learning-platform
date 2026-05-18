@@ -21,7 +21,7 @@ export default function KanaMatchingGame() {
 
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(5);
 
   const [currentKana, setCurrentKana] = useState<KanaItem>(KANA[0]);
 
@@ -191,6 +191,20 @@ export default function KanaMatchingGame() {
           <div className="flex flex-col gap-10">
             <div className="grid gap-6">
               <GameHeader score={score} streak={streak} lives={lives} />
+
+              <div className="mt-1 rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-5 text-left text-xs uppercase tracking-[0.35em] text-[#0D3A5F]/70">
+                <p className="mb-6 font-semibold mb-2 text-center">
+                  Keyboard shortcuts
+                </p>{" "}
+                <ul className="space-y-1">
+                  <li>H → Hiragana</li>
+                  <li>K → Katakana</li>
+                  <li>A → All</li>
+                  <li>1-4 → Select answer</li>
+                  <li>Enter → Submit typing</li>
+                </ul>
+              </div>
+
               <GameModeToggle
                 mode={mode}
                 setMode={setMode}
@@ -198,6 +212,12 @@ export default function KanaMatchingGame() {
                 setGameMode={setGameMode}
               />
             </div>
+
+            {feedback ? (
+              <div className=" rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-5 py-4 text-sm font-semibold text-[#0D3A5F]">
+                {feedback}
+              </div>
+            ) : null}
 
             <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-10 text-center shadow-sm">
               <p className="text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-5">
@@ -211,7 +231,7 @@ export default function KanaMatchingGame() {
               </div>
               <button
                 onClick={() => speakKana(currentKana.kana)}
-                className="inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-6 py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
+                className="cursor-pointer inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-6 py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
               >
                 🔊 Hear pronunciation
               </button>
@@ -232,25 +252,7 @@ export default function KanaMatchingGame() {
               )}
             </div>
 
-            {feedback ? (
-              <div className="rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-5 py-4 text-sm font-semibold text-[#0D3A5F]">
-                {feedback}
-              </div>
-            ) : null}
-
             <HardestKana hardest={hardestKana} />
-
-            <div className="mt-6 rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-5 text-left text-xs uppercase tracking-[0.35em] text-[#0D3A5F]/70">
-              <p className="font-semibold mb-2">Keyboard shortcuts</p>
-              <ul className="space-y-1">
-                <li>1-4 → Select answer</li>
-                <li>Enter → Submit typing</li>
-                <li>H → Hiragana</li>
-                <li>K → Katakana</li>
-                <li>A → All</li>
-              </ul>
-            </div>
-
           </div>
         </div>
       </div>
