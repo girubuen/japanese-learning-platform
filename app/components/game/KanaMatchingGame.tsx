@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "../data/supabaseClient";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   KANA,
@@ -16,6 +17,8 @@ import TypingMode from "./TypingMode";
 import HardestKana from "./HardestKana";
 
 export default function KanaMatchingGame() {
+  const userId = "guest"; // temporary until auth is added
+
   const [mode, setMode] = useState<Mode>("all");
   const [gameMode, setGameMode] = useState<GameMode>("Multiple Choices");
 
@@ -67,15 +70,48 @@ export default function KanaMatchingGame() {
     generateQuestion();
   }, [mode]);
 
-  const updateStats = (correct: boolean) => {
-    setStats((prev) => ({
-      ...prev,
-      [currentKana.kana]: {
-        correct: (prev[currentKana.kana]?.correct || 0) + (correct ? 1 : 0),
-        wrong: (prev[currentKana.kana]?.wrong || 0) + (correct ? 0 : 1),
-      },
-    }));
-  };
+  const updateStats = async (correct: boolean) => {
+  // LOCAL STATE (keep as-is)
+  setStats((prev) => ({
+    ...prev,
+    [currentKana.kana]: {
+      correct: (prev[currentKana.kana]?.correct || 0) + (correct ? 1 : 0),
+      wrong: (prev[currentKana.kana]?.wrong || 0) + (correct ? 0 : 1),
+    },
+  }));
+
+  // SUPABASE UPSERT WITH REAL ACCUMULATION
+  const { data: existing } = await supabase
+    .from("user_progress")
+    .select("correct, wrong")
+    .eq("user_id", userId)
+    .eq("character", currentKana.kana)
+    .single();
+
+  const newCorrect =
+    (existing?.correct || 0) + (correct ? 1 : 0);
+
+  const newWrong =
+    (existing?.wrong || 0) + (correct ? 0 : 1);
+
+  const accuracy =
+    Math.round((newCorrect / (newCorrect + newWrong)) * 100);
+
+  const { error } = await supabase.from("user_progress").upsert({
+    user_id: userId,
+    kana_type: currentKana.type,
+    character: currentKana.kana,
+    correct: newCorrect,
+    wrong: newWrong,
+    status: accuracy >= 80 ? "mastered" : "learning",
+    accuracy,
+    updated_at: new Date().toISOString(),
+  });
+
+  if (error) {
+    console.error("❌ Supabase write failed:", error);
+  }
+};
 
   const nextQuestion = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
