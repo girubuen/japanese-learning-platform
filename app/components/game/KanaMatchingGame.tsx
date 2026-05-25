@@ -207,7 +207,49 @@ export default function KanaMatchingGame() {
         {" "}
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 sm:gap-10">
-            {/* HEADER */}
+            {/* header */}
+            <header className="flex flex-col items-center text-center gap-4 pt-0 pb-10">
+              {" "}
+              <h1
+                className="
+      text-4xl sm:text-5xl
+      font-semibold
+      tracking-tight
+      text-slate-900
+      bg-gradient-to-b from-slate-900 to-slate-700
+      bg-clip-text
+      text-transparent
+    "
+                style={{
+                  fontFamily:
+                    "'SF Pro Display', 'Inter', 'Hiragino Sans', system-ui, sans-serif",
+                }}
+              >
+                Kana Matching Game
+              </h1>
+              {/* subtle iOS-style divider */}
+              <div className="relative w-28 h-px">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-300/40 to-transparent" />
+              </div>
+              <p
+                className="
+      text-sm sm:text-base
+      text-slate-500
+      max-w-sm
+      leading-relaxed
+      tracking-[0.01em]
+    "
+                style={{
+                  fontFamily:
+                    "'SF Pro Display', 'Inter', 'Hiragino Sans', system-ui, sans-serif",
+                }}
+              >
+                Match each hiragana or katakana character with its correct
+                romaji reading.
+              </p>
+            </header>
+
+            {/* HEADER / STATS */}
             <div className="grid gap-6">
               <GameHeader score={score} streak={streak} lives={lives} />
 

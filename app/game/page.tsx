@@ -113,49 +113,6 @@ export default function GamePage() {
           </Link>
         </div>
 
-        {/* header */}
-        <header className="flex flex-col items-center text-center gap-4 py-10">
-          <h1
-            className="
-      text-4xl sm:text-5xl
-      font-semibold
-      tracking-tight
-      text-slate-900
-      bg-gradient-to-b from-slate-900 to-slate-700
-      bg-clip-text
-      text-transparent
-    "
-            style={{
-              fontFamily:
-                "'SF Pro Display', 'Inter', 'Hiragino Sans', system-ui, sans-serif",
-            }}
-          >
-            Kana Matching Game
-          </h1>
-
-          {/* subtle iOS-style divider */}
-          <div className="relative w-28 h-px">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-sky-300/40 to-transparent" />
-          </div>
-
-          <p
-            className="
-      text-sm sm:text-base
-      text-slate-500
-      max-w-sm
-      leading-relaxed
-      tracking-[0.01em]
-    "
-            style={{
-              fontFamily:
-                "'SF Pro Display', 'Inter', 'Hiragino Sans', system-ui, sans-serif",
-            }}
-          >
-            Match each hiragana or katakana character with its correct romaji
-            reading.
-          </p>
-        </header>
-
         {/* game container wrapper (NEW iOS card feel) */}
         <div
           className="
