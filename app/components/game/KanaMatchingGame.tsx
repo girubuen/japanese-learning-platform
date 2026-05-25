@@ -1,6 +1,5 @@
 "use client";
 
-import { supabase } from "../data/supabaseClient";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   KANA,
@@ -10,40 +9,58 @@ import {
   type Stats,
 } from "../data/kana-data";
 import { shuffle, getWeightedKana, speakKana } from "../data/kana-utils";
+import {
+  updateLocalProgress,
+  syncProgressToSupabase,
+} from "../data/kana-progress";
 import GameHeader from "./GameHeader";
 import GameModeToggle from "./GameModeToggle";
 import MultipleChoice from "./MultipleChoice";
 import TypingMode from "./TypingMode";
 import HardestKana from "./HardestKana";
 
-export default function KanaMatchingGame() {
-  const userId = "guest"; // temporary until auth is added
+const GAME_CONFIG = {
+  initialLives: 5,
+  initialScore: 0,
+  nextQuestionDelay: 1200, // ms
+  masteryThreshold: 80, // % accuracy
+} as const;
 
+export default function KanaMatchingGame() {
+  const userId = "guest"; // TODO: replace with auth system
+
+  // ============ State Management ============
   const [mode, setMode] = useState<Mode>("all");
   const [gameMode, setGameMode] = useState<GameMode>("Multiple Choices");
-
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [lives, setLives] = useState(5);
-
+  const [lives, setLives] = useState<number>(GAME_CONFIG.initialLives);
   const [currentKana, setCurrentKana] = useState<KanaItem>(KANA[0]);
   const [options, setOptions] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("");
   const [typingAnswer, setTypingAnswer] = useState("");
-
+  const [lastKanaShown, setLastKanaShown] = useState<string | undefined>();
   const [stats, setStats] = useState<Record<string, Stats>>({});
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // ============ Persistence ============
   useEffect(() => {
     const saved = localStorage.getItem("kana-stats");
-    if (saved) setStats(JSON.parse(saved));
+    if (saved) {
+      try {
+        setStats(JSON.parse(saved));
+      } catch (e) {
+        console.warn("Failed to load saved stats");
+      }
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("kana-stats", JSON.stringify(stats));
   }, [stats]);
 
+  // ============ Game Logic ============
   const kanaPool = useMemo(() => {
     if (mode === "hiragana") return KANA.filter((k) => k.type === "hiragana");
     if (mode === "katakana") return KANA.filter((k) => k.type === "katakana");
@@ -51,10 +68,11 @@ export default function KanaMatchingGame() {
   }, [mode]);
 
   const generateQuestion = () => {
-    const randomKana = getWeightedKana(kanaPool, stats);
-
+    const randomKana = getWeightedKana(kanaPool, stats, lastKanaShown);
     setCurrentKana(randomKana);
+    setLastKanaShown(randomKana.kana);
 
+    // Generate wrong answers
     const wrongs = shuffle(
       kanaPool
         .filter((k) => k.romaji !== randomKana.romaji)
@@ -67,79 +85,46 @@ export default function KanaMatchingGame() {
   };
 
   useEffect(() => {
+    setLastKanaShown(undefined);
     generateQuestion();
-  }, [mode]);
+  }, [mode, kanaPool]);
 
   const updateStats = async (correct: boolean) => {
-  // LOCAL STATE (keep as-is)
-  setStats((prev) => ({
-    ...prev,
-    [currentKana.kana]: {
-      correct: (prev[currentKana.kana]?.correct || 0) + (correct ? 1 : 0),
-      wrong: (prev[currentKana.kana]?.wrong || 0) + (correct ? 0 : 1),
-    },
-  }));
+    // Update local state
+    setStats((prev) => updateLocalProgress(prev, currentKana.kana, correct));
 
-  // SUPABASE UPSERT WITH REAL ACCUMULATION
-  const { data: existing } = await supabase
-    .from("user_progress")
-    .select("correct, wrong")
-    .eq("user_id", userId)
-    .eq("character", currentKana.kana)
-    .single();
+    // Sync to Supabase
+    await syncProgressToSupabase({
+      userId,
+      kanaType: currentKana.type,
+      character: currentKana.kana,
+      correct,
+    });
+  };
 
-  const newCorrect =
-    (existing?.correct || 0) + (correct ? 1 : 0);
-
-  const newWrong =
-    (existing?.wrong || 0) + (correct ? 0 : 1);
-
-  const accuracy =
-    Math.round((newCorrect / (newCorrect + newWrong)) * 100);
-
-  const { error } = await supabase.from("user_progress").upsert({
-    user_id: userId,
-    kana_type: currentKana.type,
-    character: currentKana.kana,
-    correct: newCorrect,
-    wrong: newWrong,
-    status: accuracy >= 80 ? "mastered" : "learning",
-    accuracy,
-    updated_at: new Date().toISOString(),
-  });
-
-  if (error) {
-    console.error("❌ Supabase write failed:", error);
-  }
-};
-
-  const nextQuestion = () => {
+  const scheduleNextQuestion = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-    timeoutRef.current = setTimeout(() => {
-      generateQuestion();
-    }, 1200);
+    timeoutRef.current = setTimeout(
+      generateQuestion,
+      GAME_CONFIG.nextQuestionDelay,
+    );
   };
 
   const handleCorrect = () => {
     setScore((s) => s + 1);
     setStreak((s) => s + 1);
-
     updateStats(true);
     setFeedback("Correct! 🎉");
-
     speakKana(currentKana.kana);
-    nextQuestion();
+    scheduleNextQuestion();
   };
 
   const handleWrong = () => {
     setLives((l) => l - 1);
     setStreak(0);
-
     updateStats(false);
     setFeedback(`Wrong! ${currentKana.kana} = ${currentKana.romaji}`);
-
-    nextQuestion();
+    scheduleNextQuestion();
   };
 
   const handleMultipleChoice = (selected: string) => {
@@ -155,6 +140,7 @@ export default function KanaMatchingGame() {
     }
   };
 
+  // ============ Keyboard Shortcuts ============
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (
@@ -174,13 +160,16 @@ export default function KanaMatchingGame() {
     return () => window.removeEventListener("keydown", handler);
   }, [options, gameMode, typingAnswer]);
 
+  // ============ Reset Game ============
   const resetGame = () => {
     setScore(0);
     setStreak(0);
-    setLives(5);
+    setLives(GAME_CONFIG.initialLives);
+    setLastKanaShown(undefined);
     generateQuestion();
   };
 
+  // ============ Compute Hardest Kana ============
   const hardestKana = Object.entries(stats)
     .sort((a, b) => b[1].wrong - a[1].wrong)
     .slice(0, 5);

@@ -169,7 +169,7 @@ export default function HomePage() {
 
         {/* ── Subtle footer hint ── */}
         <p
-          className="text-xs tracking-widest uppercase mt-4 opacity-40"
+          className="text-xs tracking-widest uppercase mt-4 opacity-50"
           style={{ color: "#000000", fontFamily: "Georgia, serif" }}
         >
           Hiragana · Katakana · Kanji (Soon)
