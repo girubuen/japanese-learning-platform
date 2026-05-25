@@ -94,79 +94,112 @@ type KanaCardProps = {
 
 function KanaCard({ entry, showRomaji, onClick }: KanaCardProps) {
   if (!entry.kana) {
-    return <div className="aspect-square" />;
+    return <div className="aspect-square opacity-0 pointer-events-none" />;
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
+    <button
       aria-label={`${entry.kana} — ${entry.romaji}`}
       onClick={() => onClick(entry.romaji)}
       className="
         group
+        relative
         aspect-square
+        overflow-hidden
+        rounded-3xl
+
+        bg-white/70
+        backdrop-blur-xl
+
+        border border-white/40
+        shadow-[0_4px_30px_rgba(0,0,0,0.06)]
+
         flex flex-col items-center justify-center
-        rounded-sm
-        border border-[#0D3A5F]/20
-        bg-[#F4E7D3]
+
+        transition-all duration-300 ease-out
+
+        hover:scale-[1.04]
+        hover:shadow-[0_10px_40px_rgba(0,0,0,0.12)]
+        hover:bg-white/90
         cursor-pointer
-        select-none
-        transition-all duration-200 ease-out
-        hover:bg-[#0881A3]
-        hover:border-[#0881A3]
-        hover:scale-105
-        hover:shadow-md
+
+        active:scale-[0.98]
+
         focus-visible:outline-none
         focus-visible:ring-2
-        focus-visible:ring-[#0881A3]
-        focus-visible:ring-offset-2
-        focus-visible:ring-offset-[#F4E7D3]
+        focus-visible:ring-sky-400/60
       "
     >
+      {/* subtle glow */}
+      <div
+        className="
+          absolute inset-0
+          bg-gradient-to-br
+          from-white/60
+          via-transparent
+          to-sky-100/40
+          opacity-70
+        "
+      />
+
       <span
         className="
-          text-3xl sm:text-4xl
-          font-normal
-          leading-none
-          text-[#0D3A5F]
-          group-hover:text-white
-          transition-colors duration-200
+          relative z-10
+          text-4xl sm:text-5xl
+          font-medium
+          tracking-tight
+          text-slate-800
+          transition-transform duration-300
+          group-hover:scale-110
         "
-        style={{ fontFamily: "Georgia, 'Hiragino Mincho ProN', serif" }}
+        style={{
+          fontFamily:
+            "'SF Pro Display', 'Hiragino Sans', 'Noto Sans JP', sans-serif",
+        }}
       >
         {entry.kana}
       </span>
-      {showRomaji && (
-        <span
-          className="
-            mt-1.5
-            text-[10px] sm:text-xs
-            tracking-widest
-            uppercase
-            text-[#0D3A5F]/50
-            group-hover:text-white/70
-            transition-colors duration-200
-          "
-          style={{ fontFamily: "Georgia, serif" }}
-        >
-          {entry.romaji}
-        </span>
-      )}
-    </div>
+
+      <span
+        className={`
+          relative z-10
+          mt-2
+          text-[11px]
+          uppercase
+          tracking-[0.24em]
+          text-slate-400
+          transition-all duration-300
+          ${
+            showRomaji
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-1"
+          }
+        `}
+      >
+        {entry.romaji}
+      </span>
+    </button>
   );
 }
 
 function RowLabel({ label }: { label: string }) {
   return (
-    <div className="col-span-full flex items-center gap-3 mt-2 mb-0.5">
+    <div className="col-span-full flex items-center gap-3 pt-2">
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
       <span
-        className="text-xs uppercase tracking-[0.2em] text-[#0D3A5F]/40"
-        style={{ fontFamily: "Georgia, serif" }}
+        className="
+          text-[10px]
+          uppercase
+          tracking-[0.35em]
+          text-slate-400
+          font-medium
+        "
       >
-        {label}-row
+        {label}
       </span>
-      <div className="flex-1 h-px bg-[#0D3A5F]/10" />
+
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
     </div>
   );
 }
@@ -176,29 +209,101 @@ export default function KatakanaGrid() {
 
   const speakRomaji = (romaji: string) => {
     if ("speechSynthesis" in window) {
+      speechSynthesis.cancel();
+
       const utterance = new SpeechSynthesisUtterance(romaji);
       utterance.lang = "en-US";
+      utterance.rate = 0.9;
+
       speechSynthesis.speak(utterance);
     }
   };
 
   return (
-    <section className="w-full max-w-2xl mx-auto">
-      <div className="mb-4 flex justify-center">
+    <section
+      className="
+        relative
+        w-full
+        max-w-5xl
+        mx-auto
+        px-4
+        py-8
+      "
+    >
+      {/* background glow */}
+      <div
+        className="
+          absolute inset-0 -z-10
+          bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.10),transparent_40%)]
+        "
+      />
+
+      {/* top bar */}
+      <div
+        className="
+          mb-8
+          flex items-center justify-between
+          rounded-3xl
+          border border-white/50
+          bg-white/60
+          backdrop-blur-xl
+          px-5 py-4
+          shadow-[0_8px_30px_rgba(0,0,0,0.06)]
+        "
+      >
+        <div>
+          <h2 className="text-xl font-semibold text-slate-800 tracking-tight">
+            Katakana
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Tap a character to hear pronunciation
+          </p>
+        </div>
+
         <button
           onClick={() => setShowRomaji(!showRomaji)}
-          className="px-4 py-2 rounded-sm border-2 border-[#0D3A5F] text-sm tracking-wide text-[#0D3A5F] font-semibold transition-all duration-200 ease-out hover:bg-[#0D3A5F] hover:text-[#F4E7D3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4E7D3]"
-          style={{ fontFamily: "Georgia, serif" }}
+          className="
+            rounded-2xl
+            px-4 py-2.5
+
+            bg-slate-900
+            text-white
+            text-sm
+            font-medium
+
+            transition-all duration-200
+
+            hover:bg-slate-800
+            hover:scale-[1.02]
+            cursor-pointer
+
+            active:scale-[0.98]
+
+            shadow-lg shadow-slate-900/10
+          "
         >
           {showRomaji ? "Hide Romaji" : "Show Romaji"}
         </button>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-4">
+
+      {/* grid */}
+      <div
+        className="
+          grid
+          grid-cols-3
+          sm:grid-cols-4
+          md:grid-cols-5
+          gap-4 sm:gap-5
+        "
+      >
         {KATAKANA_ROWS.map((row) => {
           const { group } = row[0];
+
           return (
             <div key={group} className="contents">
               <RowLabel label={group} />
+
               {row.map((entry, i) => (
                 <KanaCard
                   key={`${entry.romaji}-${i}`}
@@ -212,12 +317,27 @@ export default function KatakanaGrid() {
         })}
       </div>
 
-      <p
-        className="mt-6 text-center text-xs tracking-widest uppercase text-[#0D3A5F]/35"
-        style={{ fontFamily: "Georgia, serif" }}
-      >
-        {KANA_LIST.filter((k) => k.kana).length} characters · Katakana
-      </p>
+      {/* footer */}
+      <div className="mt-10 flex justify-center">
+        <div
+          className="
+            rounded-full
+            border border-white/50
+            bg-white/60
+            backdrop-blur-xl
+            px-4 py-2
+
+            text-xs
+            tracking-[0.2em]
+            uppercase
+            text-slate-500
+
+            shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+          "
+        >
+          {KANA_LIST.filter((k) => k.kana).length} Characters
+        </div>
+      </div>
     </section>
   );
 }

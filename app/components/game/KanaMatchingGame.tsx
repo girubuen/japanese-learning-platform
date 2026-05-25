@@ -203,7 +203,7 @@ export default function KanaMatchingGame() {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-      <div className="rounded-[1.75rem] sm:rounded-[2rem] border border-[#E7E3DE] bg-white/60 backdrop-blur-md shadow-[0_35px_80px_-35px_rgba(13,58,95,0.3)] overflow-hidden">
+      <div>
         {" "}
         <div className="p-5 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 sm:gap-10">
@@ -212,12 +212,50 @@ export default function KanaMatchingGame() {
               <GameHeader score={score} streak={streak} lives={lives} />
 
               {/* SHORTCUTS */}
-              <div className="hidden sm:block rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-4 sm:p-5 text-center text-xs uppercase tracking-[0.35em] text-[#0D3A5F]/70">
-                <p className="mb-3 sm:mb-5 font-semibold">Keyboard shortcuts</p>
+              <div
+                className="
+    hidden sm:block
 
-                <ul className="space-y-1 text-left">
-                  <li>1-4 → Select answer</li>
-                  <li>Enter → Submit typing</li>
+    rounded-[2rem]
+
+    border border-white/30
+    bg-white/35
+    backdrop-blur-lg
+
+    p-5 sm:p-6
+
+    text-center sm:text-left
+
+    text-slate-700
+
+    shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+  "
+              >
+                <p
+                  className="
+      mb-4 sm:mb-5
+
+      text-xs
+      uppercase
+      tracking-[0.35em]
+
+      font-semibold
+      text-slate-600
+    "
+                >
+                  Keyboard shortcuts
+                </p>
+
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li className="flex gap-2">
+                    <span className="text-slate-400">1–4</span>
+                    <span>→ Select answer</span>
+                  </li>
+
+                  <li className="flex gap-2">
+                    <span className="text-slate-400">Enter</span>
+                    <span>→ Submit typing</span>
+                  </li>
                 </ul>
               </div>
 
@@ -230,29 +268,102 @@ export default function KanaMatchingGame() {
             </div>
 
             {/* QUESTION CARD */}
-            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-6 sm:p-10 text-center shadow-sm">
-              <p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70 mb-4 sm:mb-5">
+            <div
+              className="
+    rounded-[2rem]
+
+    border border-white/30
+    bg-white/40
+    backdrop-blur-lg
+
+    p-6 sm:p-10
+
+    text-center
+
+    shadow-[0_16px_50px_rgba(0,0,0,0.08)]
+  "
+            >
+              {/* title */}
+              <p
+                className="
+      text-xs sm:text-sm
+      uppercase
+      tracking-[0.35em]
+      text-slate-500
+
+      mb-5 sm:mb-6
+    "
+              >
                 Match the character
               </p>
 
+              {/* feedback */}
               {feedback && (
-                <div className="mb-4 sm:mb-6 rounded-3xl border border-[#B7D4E4] bg-[#DCE7F0] px-4 sm:px-5 py-3 sm:py-4 text-sm font-semibold text-[#0D3A5F]">
+                <div
+                  className="
+        mb-5 sm:mb-6
+
+        rounded-2xl
+
+        border border-sky-200/40
+        bg-sky-50/60
+
+        backdrop-blur-lg
+
+        px-4 sm:px-5 py-3 sm:py-4
+
+        text-sm font-medium
+        text-slate-700
+
+        shadow-[0_6px_18px_rgba(0,0,0,0.04)]
+      "
+                >
                   {feedback}
                 </div>
               )}
 
+              {/* kana */}
               <div
-                className="text-[3.5rem] sm:text-[5rem] md:text-[6rem] font-black text-[#0D3A5F] mb-6 sm:mb-8"
+                className="
+      text-[3.5rem] sm:text-[5rem] md:text-[6rem]
+      font-semibold
+      text-slate-900
+      mb-6 sm:mb-8
+      leading-none
+    "
                 style={{
-                  fontFamily: "Hiragino Mincho ProN, serif",
+                  fontFamily: "'Hiragino Mincho ProN', serif",
                 }}
               >
                 {currentKana.kana}
               </div>
 
+              {/* audio button */}
               <button
                 onClick={() => speakKana(currentKana.kana)}
-                className="inline-flex items-center gap-2 rounded-full border border-[#0D3A5F] px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-[#0D3A5F] transition hover:bg-[#0D3A5F] hover:text-[#F4E7D3]"
+                className="
+      inline-flex items-center gap-2
+
+      rounded-full
+
+      border border-white/30
+      bg-white/35
+      backdrop-blur-lg
+
+      px-5 sm:px-6 py-2.5 sm:py-3
+
+      text-sm font-medium
+      text-slate-700
+
+      transition-all duration-200
+
+      hover:bg-white/50
+      hover:scale-[1.02]
+
+      active:scale-[0.98]
+
+      shadow-[0_6px_18px_rgba(0,0,0,0.05)]
+    "
               >
                 <span>🔊</span>
                 <span className="hidden sm:inline">Hear pronunciation</span>
@@ -260,7 +371,20 @@ export default function KanaMatchingGame() {
             </div>
 
             {/* ANSWERS */}
-            <div className="rounded-[1.75rem] border border-[#E2E8F0] bg-white p-5 sm:p-8 shadow-sm">
+            <div
+              className="
+    rounded-[2rem]
+
+    border border-white/30
+    bg-white/40
+    backdrop-blur-lg
+
+    p-5 sm:p-8
+
+    shadow-[0_16px_50px_rgba(0,0,0,0.08)]
+  "
+            >
+              {" "}
               {gameMode === "Multiple Choices" ? (
                 <MultipleChoice
                   options={options}

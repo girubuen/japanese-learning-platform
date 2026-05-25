@@ -8,34 +8,113 @@ type Props = {
 
 export default function GameHeader({ score, streak, lives }: Props) {
   return (
-    <div className="grid gap-6 rounded-[1.75rem] border border-[#E2E8F0] bg-[#F8FAFC] p-6 text-[#0D3A5F] shadow-sm">
+    <div
+      className="
+        grid
+        gap-6
+
+        rounded-[2rem]
+
+        border border-white/30
+        bg-white/40
+        backdrop-blur-lg
+
+        p-6 sm:p-8
+
+        text-slate-900
+
+        shadow-[0_16px_50px_rgba(0,0,0,0.08)]
+      "
+    >
+      {/* header */}
       <div className="text-center sm:text-left">
-        {/* <p className="text-sm uppercase tracking-[0.4em] text-[#0D3A5F]/70">
-    Kana Matching Game
-  </p> */}
-        <h1 className="mt-3 text-4xl font-black">Kana Stats</h1>
+        <h1
+          className="
+            text-3xl sm:text-4xl
+            font-semibold
+            tracking-tight
+            text-slate-900
+          "
+          style={{
+            fontFamily:
+              "'SF Pro Display', 'Inter', 'Hiragino Sans', sans-serif",
+          }}
+        >
+          Kana Stats
+        </h1>
+
+        <div className="mt-3 h-px w-20 bg-sky-300/50 mx-auto sm:mx-0" />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
-        <div className="rounded-3xl border border-[#E7EBF0] bg-white p-4 text-center sm:text-left">
-          <p className="text-[0.7rem] uppercase tracking-[0.28em] text-[#0D3A5F]/70">
+      {/* stats grid */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {/* Score */}
+        <div
+          className="
+            rounded-2xl
+
+            border border-white/30
+            bg-white/35
+
+            backdrop-blur-lg
+
+            p-4
+
+            text-center sm:text-left
+
+            shadow-[0_6px_18px_rgba(0,0,0,0.04)]
+          "
+        >
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
             Score
           </p>
-          <p className="mt-2 text-2xl font-semibold">{score}</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-900">{score}</p>
         </div>
 
-        <div className="rounded-3xl border border-[#E7EBF0] bg-white p-4 text-center sm:text-left">
-          <p className="text-[0.7rem] uppercase tracking-[0.28em] text-[#0D3A5F]/70">
+        {/* Streak */}
+        <div
+          className="
+            rounded-2xl
+
+            border border-white/30
+            bg-white/35
+
+            backdrop-blur-lg
+
+            p-4
+
+            text-center sm:text-left
+
+            shadow-[0_6px_18px_rgba(0,0,0,0.04)]
+          "
+        >
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
             Streak
           </p>
-          <p className="mt-2 text-2xl font-semibold">{streak}</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-900">{streak}</p>
         </div>
 
-        <div className="rounded-3xl border border-[#E7EBF0] bg-white p-4 text-center sm:text-left">
-          <p className="text-[0.7rem] uppercase tracking-[0.28em] text-[#0D3A5F]/70">
+        {/* Lives */}
+        <div
+          className="
+            rounded-2xl
+
+            border border-white/30
+            bg-white/35
+
+            backdrop-blur-lg
+
+            p-4
+
+            text-center sm:text-left
+
+            shadow-[0_6px_18px_rgba(0,0,0,0.04)]
+          "
+        >
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
             Lives
           </p>
-          <p className="mt-2 text-2xl font-semibold">{lives}</p>
+          <p className="mt-2 text-2xl font-semibold text-slate-900">{lives}</p>
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 // app/page.tsx
-// DojoKana Homepage — Minimalist Japanese aesthetic with animated ink-brush accents
 
 "use client";
 
@@ -8,179 +7,277 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-6"
-      // style={{ backgroundColor: "#F4E7D3" }}
-      // I replaced the BG w/ tori.mp4
+      className="
+        relative
+        min-h-screen
+        overflow-hidden
+
+        flex
+        items-center
+        justify-center
+
+        px-6
+      "
     >
-      {/* ── Decorative background glyphs (purely visual, aria-hidden) ── */}
+      {/* ambient background */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        className="absolute inset-0 pointer-events-none overflow-hidden"
       >
-        {/* Large faded Kanji watermarks for ambience */}
+        <div
+          className="
+            absolute -top-40 left-1/2 -translate-x-1/2
+            w-[900px] h-[900px]
+            rounded-full
+            bg-sky-200/10
+            blur-3xl
+          "
+        />
+
+        <div
+          className="
+            absolute bottom-0 right-0
+            w-[500px] h-[500px]
+            rounded-full
+            bg-slate-300/10
+            blur-3xl
+          "
+        />
+
+        {/* kana watermarks */}
         <span
-          className="absolute -top-8 -left-6 text-[18rem] font-black leading-none opacity-[0.045]"
-          style={{ color: "#0D3A5F", fontFamily: "serif" }}
+          className="
+            absolute -top-10 -left-8
+            text-[18rem] sm:text-[22rem]
+            font-black leading-none
+            text-slate-900/[0.04]
+          "
+          style={{
+            fontFamily:
+              "'SF Pro Display', 'Hiragino Sans', 'Noto Sans JP', sans-serif",
+          }}
         >
-          道
+          あ
         </span>
+
         <span
-          className="absolute -bottom-10 -right-4 text-[16rem] font-black leading-none opacity-[0.045]"
-          style={{ color: "#0D3A5F", fontFamily: "serif" }}
+          className="
+            absolute -bottom-16 -right-6
+            text-[16rem] sm:text-[20rem]
+            font-black leading-none
+            text-slate-900/[0.04]
+          "
+          style={{
+            fontFamily:
+              "'SF Pro Display', 'Hiragino Sans', 'Noto Sans JP', sans-serif",
+          }}
         >
-          仮
+          ア
         </span>
-        {/* Thin vertical rule lines — evokes Japanese manuscript paper */}
+
+        {/* grid lines */}
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute top-0 bottom-0 w-px opacity-10"
-            style={{
-              left: `${(i + 1) * 16}%`,
-              backgroundColor: "#0D3A5F",
-            }}
+            className="absolute top-0 bottom-0 w-px bg-slate-300/20"
+            style={{ left: `${(i + 1) * 16}%` }}
           />
         ))}
       </div>
 
-      {/* ── Hero content card ── */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-xl w-full gap-8">
-        {/* Kana badge above title */}
+      {/* content */}
+      <div className="relative z-10 w-full max-w-3xl flex flex-col items-center text-center">
+        {/* badge */}
         <div
-          className="flex gap-3 text-2xl tracking-widest font-light"
-          style={{ color: "#000000", fontFamily: "serif" }}
-          aria-label="Hiragana and Katakana characters"
+          className="
+            mb-6
+
+            inline-flex items-center gap-3
+
+            rounded-full
+            border border-white/30
+
+            bg-white/35
+            backdrop-blur-lg
+
+            px-5 py-2.5
+
+            shadow-[0_6px_24px_rgba(0,0,0,0.05)]
+          "
         >
-          <span>あ</span>
-          <span className="opacity-30">|</span>
-          <span>ア</span>
+          <span className="text-lg text-slate-700">あ</span>
+
+          <div className="h-4 w-px bg-slate-300/50" />
+
+          <span className="text-lg text-slate-700">ア</span>
         </div>
 
-        {/* ── Logo / Title ── */}
-        <div className="flex flex-col items-center gap-2">
-          <h1
-            className="text-6xl sm:text-7xl font-black tracking-tight leading-none"
-            style={{
-              color: "#0D3A5F",
-              fontFamily: "'Georgia', 'Times New Roman', serif",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            DojoKana
-          </h1>
+        {/* hero card */}
+        <div
+          className="
+            w-full
 
-          {/* Ink-brush underline accent */}
-          <div className="relative w-40 h-[3px] mt-1" aria-hidden>
+            rounded-[2rem]
+
+            border border-white/30
+
+            bg-white/40
+            backdrop-blur-lg
+
+            px-8 py-12 sm:px-14 sm:py-16
+
+            shadow-[0_16px_50px_rgba(0,0,0,0.08)]
+          "
+        >
+          {/* title */}
+          <div className="flex flex-col items-center">
+            <span className="mb-4 text-xs font-medium uppercase tracking-[0.45em] text-sky-500">
+              Japanese Kana Practice
+            </span>
+
+            <h1
+              className="
+                text-6xl sm:text-7xl md:text-8xl
+                font-semibold
+                tracking-tight
+                text-slate-900
+              "
+              style={{
+                fontFamily:
+                  "'SF Pro Display', 'Inter', 'Hiragino Sans', sans-serif",
+              }}
+            >
+              DojoKana
+            </h1>
+
             <div
-              className="absolute inset-0 rounded-full"
-              style={{ backgroundColor: "#0881A3" }}
+              className="
+                mt-5 h-px w-32
+                bg-gradient-to-r
+                from-transparent via-sky-300/50 to-transparent
+              "
             />
-            <div
-              className="absolute right-0 top-0 h-full w-1/3 rounded-full opacity-40"
-              style={{ backgroundColor: "#0D3A5F" }}
-            />
+          </div>
+
+          {/* subtitle */}
+          <p
+            className="
+              mx-auto mt-8 max-w-lg
+              text-base sm:text-lg
+              leading-relaxed
+              text-slate-600
+            "
+          >
+            Master Hiragana and Katakana through clean, interactive, and
+            beautifully designed practice sessions.
+          </p>
+
+          {/* CTA */}
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            {/* primary */}
+            <Link
+              href="/practice/hiragana"
+              className="
+                flex-1
+
+                rounded-2xl
+
+                bg-slate-900
+                text-white
+
+                px-6 py-4
+
+                text-center text-sm sm:text-base font-medium
+
+                shadow-lg shadow-slate-900/20
+
+                transition-all duration-300
+                hover:scale-[1.02]
+                hover:bg-slate-800
+
+                active:scale-[0.98]
+              "
+            >
+              Start Learning
+            </Link>
+
+            {/* secondary */}
+            <Link
+              href="/game"
+              className="
+                flex-1
+
+                rounded-2xl
+
+                border border-white/30
+
+                bg-white/35
+                backdrop-blur-lg
+
+                px-6 py-4
+
+                text-center text-sm sm:text-base font-medium
+                text-slate-800
+
+                shadow-[0_6px_18px_rgba(0,0,0,0.05)]
+
+                transition-all duration-300
+                hover:scale-[1.02]
+                hover:bg-white/50
+
+                active:scale-[0.98]
+              "
+            >
+              Play Game
+            </Link>
+          </div>
+
+          {/* pills */}
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            {["Hiragana", "Katakana", "Kanji Soon"].map((item) => (
+              <div
+                key={item}
+                className="
+                  rounded-full
+
+                  border border-white/30
+
+                  bg-white/35
+                  backdrop-blur-lg
+
+                  px-4 py-2
+
+                  text-xs
+                  font-medium
+                  uppercase
+                  tracking-[0.24em]
+
+                  text-slate-600
+
+                  shadow-[0_2px_8px_rgba(0,0,0,0.04)]
+                "
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* ── Subtitle ── */}
-        <p
-          className="text-lg sm:text-xl font-light leading-relaxed max-w-sm"
-          style={{
-            color: "#0D3A5F",
-            opacity: 0.75,
-            fontFamily: "Georgia, serif",
-          }}
-        >
-          Master Hiragana and Katakana&nbsp;
-          <span className="italic">the right way</span>
-        </p>
-
-        {/* ── CTA Buttons ── */}
-        <div className="mt-4 flex w-full flex-col gap-3 sm:max-w-sm sm:flex-row sm:gap-4">
-          {/* Primary — Start Learning */}
-          <Link
-            href="/practice/hiragana"
-            className="
-      group relative flex-1 overflow-hidden rounded-2xl
-      px-6 py-4
-      text-center text-sm sm:text-base font-semibold
-      tracking-[0.04em]
-      text-[#F4E7D3]
-      shadow-[0_10px_30px_rgba(8,129,163,0.25)]
-      transition-all duration-300 ease-out
-
-      hover:-translate-y-0.5
-      hover:shadow-[0_16px_40px_rgba(13,58,95,0.35)]
-
-      active:scale-[0.98]
-
-      focus:outline-none
-      focus-visible:ring-2
-      focus-visible:ring-[#0881A3]
-      focus-visible:ring-offset-2
-    "
-            style={{
-              background: "linear-gradient(135deg, #0881A3 0%, #0D3A5F 100%)",
-              fontFamily: "Georgia, serif",
-            }}
-          >
-            <span className="relative z-10">Start Learning</span>
-
-            {/* glow */}
-            <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-white/10" />
-          </Link>
-
-          {/* Secondary — Play Game */}
-          <Link
-            href="/game"
-            className="
-      group relative flex-1 overflow-hidden rounded-2xl
-      border border-[#0D3A5F]/20
-      bg-white/70 backdrop-blur-md
-
-      px-6 py-4
-      text-center text-sm sm:text-base font-semibold
-      tracking-[0.04em]
-      text-[#0D3A5F]
-
-      shadow-[0_8px_24px_rgba(15,23,42,0.06)]
-      transition-all duration-300 ease-out
-
-      hover:-translate-y-0.5
-      hover:border-[#0D3A5F]
-      hover:bg-[#0D3A5F]
-      hover:text-[#F4E7D3]
-      hover:shadow-[0_14px_34px_rgba(13,58,95,0.18)]
-
-      active:scale-[0.98]
-
-      focus:outline-none
-      focus-visible:ring-2
-      focus-visible:ring-[#0D3A5F]
-      focus-visible:ring-offset-2
-    "
-            style={{
-              fontFamily: "Georgia, serif",
-            }}
-          >
-            <span className="relative z-10">Play Game</span>
-          </Link>
-        </div>
-
-        {/* ── Subtle footer hint ── */}
-        <p
-          className="text-xs tracking-widest uppercase mt-4 opacity-50"
-          style={{ color: "#000000", fontFamily: "Georgia, serif" }}
-        >
-          Hiragana · Katakana · Kanji (Soon)
+        {/* footer */}
+        <p className="mt-8 text-xs uppercase tracking-[0.3em] text-slate-500">
+          Learn Japanese beautifully
         </p>
       </div>
 
-      {/* ── Thin bottom border accent ── */}
+      {/* bottom line */}
       <div
         aria-hidden
-        className="absolute bottom-0 left-0 right-0 h-1"
-        style={{ backgroundColor: "#0881A3", opacity: 0.6 }}
+        className="
+          absolute bottom-0 left-0 right-0
+          h-px
+          bg-gradient-to-r
+          from-transparent via-sky-300/40 to-transparent
+        "
       />
     </main>
   );

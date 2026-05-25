@@ -4,111 +4,317 @@ import KatakanaGrid from "../../components/practice/KatakanaGrid";
 export default function KatakanaPage() {
   return (
     <main
-      className="min-h-screen flex flex-col items-center relative overflow-hidden"
-      // style={{ backgroundColor: "#F4E7D3" }}
+      className="
+        relative
+        min-h-screen
+        overflow-hidden
+
+        bg-[#f7f8fa]
+
+        flex
+        flex-col
+        items-center
+      "
     >
+      {/* ambient background */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        className="
+          absolute inset-0
+          pointer-events-none
+          overflow-hidden
+        "
       >
+        {/* cyan glow */}
+        <div
+          className="
+            absolute -top-40 left-1/2 -translate-x-1/2
+            w-[800px] h-[800px]
+            rounded-full
+            bg-sky-200/20
+            blur-3xl
+          "
+        />
+
+        {/* blue glow */}
+        <div
+          className="
+            absolute bottom-0 right-0
+            w-[500px] h-[500px]
+            rounded-full
+            bg-cyan-200/20
+            blur-3xl
+          "
+        />
+
+        {/* giant kana */}
         <span
-          className="absolute -bottom-16 -left-10 text-[20rem] font-black leading-none opacity-[0.035]"
-          style={{ color: "#0D3A5F", fontFamily: "serif" }}
+          className="
+            absolute
+            -bottom-20
+            -left-10
+
+            text-[22rem]
+            font-black
+            leading-none
+
+            text-slate-900/[0.03]
+          "
+          style={{
+            fontFamily:
+              "'SF Pro Display', 'Hiragino Sans', 'Noto Sans JP', sans-serif",
+          }}
         >
-          習
+          ア
         </span>
+
+        {/* grid lines */}
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="absolute top-0 bottom-0 w-px opacity-[0.07]"
+            className="
+              absolute top-0 bottom-0 w-px
+              bg-slate-300/20
+            "
             style={{
               left: `${(i + 1) * 20}%`,
-              backgroundColor: "#0D3A5F",
             }}
           />
         ))}
       </div>
 
-      <div className="relative z-10 w-full max-w-3xl px-6 py-14 flex flex-col items-center gap-10">
-        {/* Back Button */}
-        <div className="w-full flex items-center justify-start">
+      <div
+        className="
+          relative z-10
+          w-full
+          max-w-6xl
+          px-5 sm:px-8
+          py-10 sm:py-14
+
+          flex
+          flex-col
+          items-center
+          gap-10
+        "
+      >
+        {/* top nav */}
+        <div className="w-full flex items-center justify-between">
+          {/* back button */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm border-2 border-[#0D3A5F] text-sm tracking-wide text-[#0D3A5F] font-semibold transition-all duration-200 ease-out hover:bg-[#0D3A5F] hover:text-[#F4E7D3] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D3A5F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4E7D3]"
-            style={{ fontFamily: "Georgia, serif" }}
+            className="
+              group
+              inline-flex
+              items-center
+              gap-2
+
+              rounded-2xl
+              border border-white/50
+
+              bg-white/60
+              backdrop-blur-xl
+
+              px-4 py-2.5
+
+              text-sm
+              font-medium
+              text-slate-700
+
+              shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+
+              transition-all duration-200
+
+              hover:bg-white/80
+              hover:scale-[1.02]
+
+              active:scale-[0.98]
+            "
           >
-            <span aria-hidden className="text-base leading-none">
+            <span
+              aria-hidden
+              className="
+                text-base
+                transition-transform duration-200
+                group-hover:-translate-x-0.5
+              "
+            >
               ←
-            </span>{" "}
+            </span>
+
             Back
           </Link>
+
+          {/* switcher */}
+          <div
+            className="
+              flex items-center gap-2
+
+              rounded-2xl
+              border border-white/50
+
+              bg-white/60
+              backdrop-blur-xl
+
+              p-1
+
+              shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+            "
+          >
+            <Link
+              href="/practice/hiragana"
+              className="
+                rounded-xl
+                px-4 py-2
+
+                text-sm
+                font-medium
+                text-slate-500
+
+                transition-colors duration-200
+
+                hover:text-slate-900
+              "
+            >
+              Hiragana
+            </Link>
+
+            <Link
+              href="/practice/katakana"
+              className="
+                rounded-xl
+                bg-slate-900
+                px-4 py-2
+
+                text-sm
+                font-medium
+                text-white
+
+                shadow-lg shadow-slate-900/10
+              "
+            >
+              Katakana
+            </Link>
+          </div>
         </div>
 
-        {/* Header */}
-        <header className="flex flex-col items-center text-center gap-3">
-          <div
-            className="text-xl tracking-widest font-light mb-1"
-            style={{ color: "#0881A3", fontFamily: "serif" }}
-            aria-hidden
+        {/* hero */}
+        <header className="flex flex-col items-center text-center">
+          {/* japanese title */}
+          <span
+            className="
+              mb-3
+
+              text-sm
+              font-medium
+              uppercase
+              tracking-[0.4em]
+
+              text-sky-400
+            "
           >
             カタカナ
-          </div>
+          </span>
+
+          {/* main title */}
           <h1
-            className="text-4xl sm:text-5xl font-black tracking-tight leading-none text-[#0D3A5F]"
-            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+            className="
+              text-5xl sm:text-6xl md:text-7xl
+              font-semibold
+              tracking-tight
+              text-slate-900
+            "
+            style={{
+              fontFamily:
+                "'SF Pro Display', 'Inter', 'Hiragino Sans', sans-serif",
+            }}
           >
             Practice Katakana
           </h1>
-          <div className="relative w-32 h-[3px] mt-1" aria-hidden>
-            <div className="absolute inset-0 rounded-full bg-[#0881A3]" />
-            <div className="absolute right-0 top-0 h-full w-1/3 rounded-full bg-[#0D3A5F] opacity-40" />
-          </div>
+
+          {/* subtitle */}
           <p
-            className="mt-3 text-base sm:text-lg font-light text-[#0D3A5F]/70 max-w-sm leading-relaxed"
-            style={{ fontFamily: "Georgia, serif" }}
+            className="
+              mt-5
+              max-w-xl
+
+              text-base sm:text-lg
+              leading-relaxed
+              text-slate-500
+            "
           >
-            Start recognising characters visually.
+            Learn to recognize and pronounce katakana characters through
+            interactive visual practice.
           </p>
+
+          {/* floating pill */}
+          <div
+            className="
+              mt-6
+
+              rounded-full
+              border border-white/50
+
+              bg-white/70
+              backdrop-blur-xl
+
+              px-4 py-2
+
+              text-xs
+              font-medium
+              uppercase
+              tracking-[0.24em]
+
+              text-slate-500
+
+              shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+            "
+          >
+            46 Basic Characters
+          </div>
         </header>
 
-        {/* 🔽 Kana Switcher (ADDED HERE) */}
-        <div className="flex justify-center gap-4 -mt-4">
-          <Link
-            href="/practice/hiragana"
-            className="px-4 py-2 text-sm font-semibold rounded-sm border"
-            style={{ backgroundColor: "#F4E7D3", color: "#0D3A5F" }}
-          >
-            Hiragana
-          </Link>
-
-          <Link
-            href="/practice/katakana"
-            className="px-4 py-2 text-sm font-semibold rounded-sm"
-            style={{ backgroundColor: "#0881A3", color: "#F4E7D3" }}
-          >
-            Katakana
-          </Link>
+        {/* grid */}
+        <div className="w-full">
+          <KatakanaGrid />
         </div>
 
-        {/* Grid */}
-        <KatakanaGrid />
+        {/* footer */}
+        <footer className="flex flex-col items-center gap-4 pt-2">
+          <div
+            className="
+              h-px
+              w-20
+              bg-gradient-to-r
+              from-transparent
+              via-slate-300
+              to-transparent
+            "
+          />
 
-        {/* Footer note */}
-        <div className="flex flex-col items-center gap-3 pt-4 opacity-50">
-          <div className="w-16 h-px bg-[#0D3A5F]" />
           <p
-            className="text-xs tracking-widest uppercase text-[#0D3A5F]"
-            style={{ fontFamily: "Georgia, serif" }}
+            className="
+              text-xs
+              uppercase
+              tracking-[0.28em]
+              text-slate-400
+            "
           >
-            Flashcards &amp; quizzes coming soon
+            Flashcards & quizzes coming soon
           </p>
-        </div>
+        </footer>
       </div>
 
+      {/* bottom accent */}
       <div
         aria-hidden
-        className="absolute bottom-0 left-0 right-0 h-1 opacity-60"
-        style={{ backgroundColor: "#0881A3" }}
+        className="
+          absolute bottom-0 left-0 right-0
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-sky-300/50
+          to-transparent
+        "
       />
     </main>
   );

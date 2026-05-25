@@ -13,45 +13,64 @@ export default function MultipleChoice({ options, onSelect }: Props) {
           key={option + index}
           onClick={() => onSelect(option)}
           className="
-            group relative w-full cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl
-            border border-slate-200/70
-            bg-white/80
+            group relative w-full
+
+            rounded-2xl sm:rounded-3xl
+
+            border border-white/30
+            bg-white/40
+            backdrop-blur-lg
+
             p-4 sm:p-6
+
             text-left
-            shadow-[0_4px_20px_rgba(15,23,42,0.05)]
-            backdrop-blur-xl
-            transition-all duration-300 ease-out
+
+            text-slate-800
+
+            shadow-[0_8px_24px_rgba(0,0,0,0.06)]
+
+            transition-all duration-200 ease-out
+
+            hover:bg-white/55
+            hover:scale-[1.02]
 
             active:scale-[0.98]
-
-            hover:border-slate-300
-            hover:shadow-[0_12px_35px_rgba(15,23,42,0.10)]
-            sm:hover:-translate-y-1
           "
         >
-          {/* background glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-slate-100 opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
-
-          {/* top line */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent opacity-40 sm:opacity-60" />
+          {/* subtle top highlight */}
+          <div className="absolute inset-x-0 top-0 h-px bg-white/40 opacity-60" />
 
           {/* content */}
-          <div className="relative z-10">
-            {/* header row */}
-            <div className="flex items-center justify-between">
-              <span className="hidden sm:inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Choice
-              </span>
-
-              <div className="hidden sm:flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-500 transition-colors duration-300 group-hover:bg-slate-900 group-hover:text-white">
-                {index + 1}
-              </div>
-            </div>
-
+          <div className="relative z-10 flex items-center justify-between gap-4">
             {/* option text */}
-            <div className="mt-2 sm:mt-6 text-center sm:text-left text-lg sm:text-xl font-semibold tracking-tight text-slate-800">
+            <span className="text-base sm:text-lg font-medium leading-snug text-slate-800">
               {option}
-            </div>
+            </span>
+
+            {/* index badge */}
+            <span
+              className="
+                hidden sm:flex
+
+                h-8 w-8
+                items-center justify-center
+
+                rounded-full
+
+                bg-white/50
+                border border-white/30
+
+                text-sm font-medium
+                text-slate-600
+
+                transition-all duration-200
+
+                group-hover:bg-slate-900
+                group-hover:text-white
+              "
+            >
+              {index + 1}
+            </span>
           </div>
         </button>
       ))}
