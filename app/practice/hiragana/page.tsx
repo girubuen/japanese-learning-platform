@@ -9,7 +9,7 @@ export default function HiraganaPage() {
         min-h-screen
         overflow-hidden
 
-        bg-[#f7f8fa]
+        bg-transparent
 
         flex
         flex-col
@@ -140,7 +140,6 @@ export default function HiraganaPage() {
             >
               ←
             </span>
-
             Back
           </Link>
 
@@ -200,7 +199,7 @@ export default function HiraganaPage() {
         {/* hero */}
         <header className="flex flex-col items-center text-center">
           {/* japanese title */}
-          <span
+          {/* <span
             className="
               mb-3
 
@@ -213,7 +212,7 @@ export default function HiraganaPage() {
             "
           >
             ひらがな
-          </span>
+          </span> */}
 
           {/* main title */}
           <h1
@@ -221,14 +220,14 @@ export default function HiraganaPage() {
               text-5xl sm:text-6xl md:text-7xl
               font-semibold
               tracking-tight
-              text-slate-900
+              text-pink-200
             "
             style={{
               fontFamily:
                 "'SF Pro Display', 'Inter', 'Hiragino Sans', sans-serif",
             }}
           >
-            Practice Hiragana
+            ひらがな
           </h1>
 
           {/* subtitle */}

@@ -9,7 +9,7 @@ export default function KatakanaPage() {
         min-h-screen
         overflow-hidden
 
-        bg-[#f7f8fa]
+        bg-transparent
 
         flex
         flex-col
@@ -140,7 +140,6 @@ export default function KatakanaPage() {
             >
               ←
             </span>
-
             Back
           </Link>
 
@@ -199,21 +198,6 @@ export default function KatakanaPage() {
 
         {/* hero */}
         <header className="flex flex-col items-center text-center">
-          {/* japanese title */}
-          <span
-            className="
-              mb-3
-
-              text-sm
-              font-medium
-              uppercase
-              tracking-[0.4em]
-
-              text-sky-400
-            "
-          >
-            カタカナ
-          </span>
 
           {/* main title */}
           <h1
@@ -221,14 +205,14 @@ export default function KatakanaPage() {
               text-5xl sm:text-6xl md:text-7xl
               font-semibold
               tracking-tight
-              text-slate-900
+              text-sky-200
             "
             style={{
               fontFamily:
                 "'SF Pro Display', 'Inter', 'Hiragino Sans', sans-serif",
             }}
           >
-            Practice Katakana
+            カタカナ
           </h1>
 
           {/* subtitle */}
