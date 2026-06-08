@@ -53,15 +53,6 @@ export default function GamePage() {
         >
           遊
         </span>
-
-        {/* grid lines */}
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute top-0 bottom-0 w-px bg-slate-300/20"
-            style={{ left: `${(i + 1) * 20}%` }}
-          />
-        ))}
       </div>
 
       {/* content wrapper */}

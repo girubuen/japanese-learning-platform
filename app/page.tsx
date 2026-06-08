@@ -74,15 +74,6 @@ export default function HomePage() {
         >
           ア
         </span>
-
-        {/* grid lines */}
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute top-0 bottom-0 w-px bg-slate-300/20"
-            style={{ left: `${(i + 1) * 16}%` }}
-          />
-        ))}
       </div>
 
       {/* content */}

@@ -69,8 +69,6 @@ const HIRAGANA: KanaItem[] = [
 
   // W-line
   { kana: "わ", romaji: "wa", type: "hiragana" },
-  { kana: "ゐ", romaji: "wi", type: "hiragana" },
-  { kana: "ゑ", romaji: "we", type: "hiragana" },
   { kana: "を", romaji: "wo", type: "hiragana" },
 
   // N
@@ -141,8 +139,6 @@ const KATAKANA: KanaItem[] = [
 
   // W-line
   { kana: "ワ", romaji: "wa", type: "katakana" },
-  { kana: "ヰ", romaji: "wi", type: "katakana" },
-  { kana: "ヱ", romaji: "we", type: "katakana" },
   { kana: "ヲ", romaji: "wo", type: "katakana" },
 
   // N
